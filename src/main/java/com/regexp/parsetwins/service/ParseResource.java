@@ -19,12 +19,11 @@ public class ParseResource {
   }
 
 
-  public Map<String,String> parse(String url, String ...request) throws IOException {
+  public Map<String,String> parse(String url, String ...request)  {
     accessToResource.setUrl(url);
     String resource=accessToResource.getResource();
     Map<String,String> map=new HashMap<>();
-    Arrays.stream(request).forEach(item->map.compute(item,(a,b)->b+" "
-        + UtilString.parseData(item,resource)));
+    Arrays.stream(request).forEach(item->map.put(item,UtilString.parseData(item,resource)));
     return map;
     }
 

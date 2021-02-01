@@ -23,18 +23,17 @@ public class InputData {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  List<Map<String, String>> getData(@RequestParam String inputUrl, @RequestParam int start, @RequestParam int end,
-      @RequestParam int timeout, @RequestParam String... request)
-      throws IOException, InterruptedException {
-
+  List<Map<String, String>> getData(@RequestParam String inputUrl, @RequestParam int start,
+      @RequestParam int end,
+      @RequestParam int timeout, @RequestParam String... request) throws InterruptedException {
     Arrays.stream(request).forEach(System.out::println);// времянка
 
     //String parseUrl = UtilString.parseString(inputUrl);//обработать поступившую строку
-    List<Map<String,String>>list=new ArrayList<>();
+    List<Map<String, String>> list = new ArrayList<>();
 
-    for (int i = start; i <=end ; i++) {
-      String url=inputUrl+i;
-      list.add(resource.parse(url,request));
+    for (int i = start; i <= end; i++) {
+      String url = inputUrl + i;
+      list.add(resource.parse(url, request));
       Thread.sleep(timeout);
     }
 
