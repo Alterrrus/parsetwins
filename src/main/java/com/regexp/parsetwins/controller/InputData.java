@@ -1,6 +1,8 @@
 package com.regexp.parsetwins.controller;
 
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.regexp.parsetwins.service.ParseResource;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.spring.web.json.Json;
 
 @RestController
 @RequestMapping(value = "/enter", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,8 +28,8 @@ public class InputData {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   List<Map<String, String>> getData(@RequestParam String inputUrl, @RequestParam int start,
       @RequestParam int end,
-      @RequestParam int timeout, @RequestParam String... request) throws InterruptedException {
-    Arrays.stream(request).forEach(System.out::println);// времянка
+      @RequestParam int timeout, @RequestParam String... request)
+      throws InterruptedException, IOException {
 
     //String parseUrl = UtilString.parseString(inputUrl);//обработать поступившую строку
     List<Map<String, String>> list = new ArrayList<>();
@@ -36,7 +39,9 @@ public class InputData {
       list.add(resource.parse(url, request));
       Thread.sleep(timeout);
     }
-
+    File file = new File("/home/andrey/Desktop/new.JSON");
+    JsonMapper mapper=new JsonMapper();
+    mapper.writeValue(file,list);
     return list;
   }
 }

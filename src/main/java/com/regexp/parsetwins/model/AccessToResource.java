@@ -3,6 +3,7 @@ package com.regexp.parsetwins.model;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -24,8 +25,7 @@ public class AccessToResource {
     try{
     return new Scanner(new URL(url).openStream(),
         String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();}catch (IOException e){
-      System.out.println("IO");
-      log.info("IO");
+      log.info(Arrays.toString(e.getStackTrace()));
       return "file not found";
     }
   }
